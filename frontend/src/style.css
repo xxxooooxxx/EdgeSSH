@@ -399,6 +399,8 @@ button:disabled {
 .panel-scrim {
   position: fixed;
   inset: 0;
+  /* 从悬浮顶栏下方开始，不盖住顶栏按钮（#panel-toggle 等） */
+  top: calc(max(12px, env(safe-area-inset-top)) + 88px);
   z-index: 60;
   display: block;
   width: 100%;
@@ -413,7 +415,8 @@ button:disabled {
 .connection-panel {
   position: fixed;
   z-index: 70;
-  top: max(12px, env(safe-area-inset-top));
+  /* 悬浮抽屉从顶栏下方开始，不盖住顶栏按钮；关闭时靠 visibility 熔断点击 */
+  top: calc(max(12px, env(safe-area-inset-top)) + 88px);
   bottom: max(12px, env(safe-area-inset-bottom));
   left: 12px;
   width: min(384px, calc(100vw - 48px));
@@ -2245,6 +2248,12 @@ body[data-view='forward'] {
     padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom));
   }
 
+  /* 移动端顶栏更矮，抽屉/遮罩的上缘同步下移，保持在顶栏下方 */
+  .connection-panel,
+  .panel-scrim {
+    top: calc(max(8px, env(safe-area-inset-top)) + 76px);
+  }
+
   .topbar {
     min-height: 56px;
     padding: 6px 8px;
@@ -2378,8 +2387,11 @@ body[data-view='forward'] {
   .process-table td:nth-child(9) { grid-area: kill; text-align: right; }
   .process-kill-button { min-height: 44px; }
 
-  /* 文件管理器：手机端隐藏目录树，表格独占 */
-  .file-manager {
+  /* 文件管理器：手机端隐藏目录树，表格独占。注意 :has(.is-collapsed) 规则
+     特异性更高(0,3,0)，必须一并覆盖，否则会出现 2 列 grid 配 1 列 areas、
+     把工具栏挤进 52px 窄列的错乱布局 */
+  .file-manager,
+  .file-manager:has(> .file-tree.is-collapsed) {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "toolbar"
@@ -2389,6 +2401,9 @@ body[data-view='forward'] {
   .file-manager > .file-tree { display: none; }
   .file-toolbar { padding: 8px; gap: 6px; }
   .file-path-field { flex-basis: 100%; }
+  /* 操作区独占一行：防止在窄屏被 flex 挤成窄列、按钮竖排把工具栏撑高，
+     挤占文件表格高度（回归测试要求全屏时表格高度 > 视口一半） */
+  .file-actions { flex: 1 1 100%; }
   .file-view-controls { margin-left: 0; }
   .file-action-separator { display: none; }
 
