@@ -2126,6 +2126,11 @@ ui.resourceNetworkSelect.addEventListener('change', () => {
 });
 terminal.onData((data) => terminalTools?.handleTerminalData(data));
 new ResizeObserver(() => fitTerminal(true)).observe(ui.terminalStage);
+// Mobile keyboards (notably iOS Safari) shrink the visual viewport without
+// resizing the layout viewport, so refit the terminal on visual changes too.
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => fitTerminal(true));
+}
 window.addEventListener('beforeunload', () => {
   fileManager.reset();
   fileTree?.setReady(false);

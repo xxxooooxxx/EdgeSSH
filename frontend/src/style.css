@@ -3179,6 +3179,76 @@ button:disabled {
   }
 }
 
+/* ── Mobile touch & iOS refinements (<=760px) ─────────────────────────
+   Desktop rules above are untouched; everything in this block only narrows.
+   Keeps the existing 760px breakpoint so no new breakpoint is introduced. */
+@media (max-width: 760px) {
+  html {
+    /* Prevent iOS auto text-inflation on orientation change; 100% = no-op elsewhere. */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* iOS Safari auto-zooms any text field with font-size < 16px on focus,
+     which breaks the layout. Keep 16px for text entry on small screens. */
+  .field input,
+  .field textarea,
+  .field select,
+  #command-editor-input {
+    font-size: 16px;
+  }
+
+  /* Touch targets: 44px minimum for frequently tapped controls. */
+  .icon-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .toolbar-button,
+  .small-button {
+    min-height: 44px;
+  }
+
+  .terminal-actions .toolbar-button {
+    padding: 6px 10px;
+  }
+
+  /* Taller buttons need a taller toolbar row (desktop keeps 42px). */
+  .terminal-pane {
+    grid-template-rows: 48px minmax(0, 1fr) auto;
+  }
+
+  .dock-tab {
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .file-action {
+    min-width: 44px;
+    height: 44px;
+    padding: 0 8px;
+  }
+
+  .terminal-key {
+    height: 44px;
+  }
+
+  /* Keep the terminal clear of the iPhone home indicator. */
+  .terminal-stage {
+    padding-bottom: max(5px, env(safe-area-inset-bottom));
+  }
+
+  /* Narrow-toolbar safety: scroll horizontally instead of squeezing or
+     overflowing the viewport at 375px. */
+  .terminal-toolbar {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .terminal-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
