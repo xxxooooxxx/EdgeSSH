@@ -250,6 +250,7 @@ function element<T extends HTMLElement>(id: string): T {
 const ui = {
   panel: element<HTMLElement>('connection-panel'),
   panelToggle: element<HTMLButtonElement>('panel-toggle'),
+  panelClose: element<HTMLButtonElement>('panel-close'),
   panelScrim: element<HTMLButtonElement>('panel-scrim'),
   profileList: element<HTMLElement>('profile-list'),
   profileCount: element<HTMLElement>('profile-count'),
@@ -2060,6 +2061,10 @@ ui.panelToggle.addEventListener('click', () => {
   });
 });
 ui.panelScrim.addEventListener('click', () => {
+  setPanelOpen(false);
+  ui.panelToggle.focus();
+});
+ui.panelClose.addEventListener('click', () => {
   setPanelOpen(false);
   ui.panelToggle.focus();
 });
