@@ -54,7 +54,7 @@ body[data-view='forward'] { overflow-y: auto; background: var(--home-bg); }
 .forward-page [hidden] { display: none !important; }
 @media (max-width: 850px) { .forward-rules { grid-template-columns: minmax(0, 1fr); } .forward-toolbar { align-items: start; flex-direction: column; } }
 @media (max-width: 600px) {
-  .forward-page { padding: 24px 16px; }
+  .forward-page { padding: 24px 16px 96px; }
   .forward-page .home-section-heading { align-items: start; flex-direction: column; }
   .forward-switch { width: 100%; }
   .forward-card { padding: 18px; }

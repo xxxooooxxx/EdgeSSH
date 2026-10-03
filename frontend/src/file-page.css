@@ -1,4 +1,4 @@
-/* 文件页沿用总览的白橙主题；局部映射共享面板令牌，不改变终端侧栏的紧凑布局。 */
+/* 文件页沿用总览的白蓝主题；局部映射共享面板令牌，不改变终端侧栏的紧凑布局。 */
 body[data-view='files'] { height: auto; min-height: 100%; overflow-y: auto; background: var(--home-bg); }
 .files-page {
   --surface: var(--home-surface);
@@ -112,7 +112,5 @@ body[data-view='files'] .home-account { margin-left: auto; }
   .files-page .file-table td { height: 48px; }
   .files-panel-slot { height: 560px; }
   .files-footer { flex-direction: column; gap: 6px; }
-  #dashboard .home-rail { gap: 4px; padding-inline: 8px; justify-content: space-between; }
-  #dashboard .rail-item { padding-inline: 8px; font-size: 11px; }
-  #dashboard .rail-item svg { width: 18px; height: 18px; }
+  .files-page { padding-bottom: 96px; }
 }

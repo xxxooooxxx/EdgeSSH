@@ -1,6 +1,38 @@
 @import '@xterm/xterm/css/xterm.css';
 
 :root {
+  color-scheme: light;
+  --bg: #f1f5fb;
+  --panel: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #e9f1f9;
+  --surface-3: #dbe7f5;
+  --terminal: #0b1217;
+  --border: #d8e2f0;
+  --border-soft: #e6edf6;
+  --text: #1b2735;
+  --muted: #5b6e83;
+  --muted-2: #8b9cb2;
+  --accent: #007aff;
+  --accent-strong: #0064d4;
+  --accent-dim: rgba(0, 122, 255, 0.1);
+  --blue: #0a84ff;
+  --pink: #ff7ab8;
+  --pink-dim: rgba(255, 122, 184, 0.12);
+  --warning: #b7791f;
+  --danger: #e5484d;
+  --danger-dim: rgba(229, 72, 77, 0.1);
+  --shadow: 0 12px 32px rgba(23, 43, 77, 0.1);
+  --radius-s: 10px;
+  --radius: 16px;
+  --radius-l: 24px;
+  --radius-pill: 999px;
+  --topbar-height: calc(62px + env(safe-area-inset-top));
+  --mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme='dark'] {
   color-scheme: dark;
   --bg: #080b10;
   --panel: #0d1219;
@@ -13,40 +45,16 @@
   --text: #e9f0f3;
   --muted: #8496a3;
   --muted-2: #5e707d;
-  --accent: #69e6b4;
-  --accent-strong: #36c991;
-  --accent-dim: rgba(105, 230, 180, 0.12);
+  --accent: #0a84ff;
+  --accent-strong: #3793ff;
+  --accent-dim: rgba(10, 132, 255, 0.16);
   --blue: #70b7ff;
+  --pink: #ff8ac2;
+  --pink-dim: rgba(255, 138, 194, 0.14);
   --warning: #f5c76b;
   --danger: #ff7b82;
   --danger-dim: rgba(255, 123, 130, 0.12);
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
-  --topbar-height: calc(62px + env(safe-area-inset-top));
-  --mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-[data-theme='light'] {
-  color-scheme: light;
-  --bg: #edf2f3;
-  --panel: #f8fbfb;
-  --surface: #ffffff;
-  --surface-2: #edf4f3;
-  --surface-3: #e4eeec;
-  --terminal: #0b1217;
-  --border: #cbd9d8;
-  --border-soft: #dce7e5;
-  --text: #172329;
-  --muted: #63767c;
-  --muted-2: #87989c;
-  --accent: #12825f;
-  --accent-strong: #0c6d4e;
-  --accent-dim: rgba(18, 130, 95, 0.1);
-  --blue: #246da8;
-  --warning: #a86c0c;
-  --danger: #c63d4b;
-  --danger-dim: rgba(198, 61, 75, 0.1);
-  --shadow: 0 20px 50px rgba(38, 64, 67, 0.13);
 }
 
 * {
@@ -130,10 +138,9 @@ button:disabled {
   height: var(--topbar-height);
   align-items: center;
   justify-content: space-between;
-  padding: env(safe-area-inset-top) max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
-  border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--panel) 94%, transparent);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
+  padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--panel);
 }
 
 .brand-group,
@@ -167,16 +174,17 @@ button:disabled {
 
 .brand-mark {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--accent) 54%, var(--border));
-  border-radius: 9px;
-  background: var(--accent-dim);
-  color: var(--accent);
+  border: 0;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #0a84ff, #007aff 55%, #5e9cff);
+  color: #fff;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.32);
 }
 
 .count-badge {
@@ -191,12 +199,12 @@ button:disabled {
 
 .icon-button {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   flex: 0 0 auto;
   place-items: center;
   border: 0;
-  border-radius: 8px;
+  border-radius: 14px;
   background: transparent;
   color: var(--muted);
   text-decoration: none;
@@ -423,7 +431,7 @@ button:disabled {
 .toolbar-button,
 .secondary-button,
 .primary-button {
-  border-radius: 8px;
+  border-radius: var(--radius-pill);
   font-weight: 700;
   transition: transform 150ms ease, background 150ms ease, border-color 150ms ease, color 150ms ease;
 }
@@ -627,19 +635,19 @@ button:disabled {
   width: 100%;
   min-width: 0;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 12px;
   outline: 0;
   background: var(--surface);
   color: var(--text);
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 14px;
   transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
 }
 
 .field input,
 .field select {
-  height: 38px;
-  padding: 0 10px;
+  height: 44px;
+  padding: 0 14px;
 }
 
 .field textarea {
@@ -685,10 +693,10 @@ button:disabled {
 .segmented-control {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 3px;
+  padding: 4px;
   border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--bg);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
 }
 
 .segmented-control input {
@@ -866,7 +874,7 @@ button:disabled {
   gap: 8px;
   min-width: 0;
   background: var(--accent);
-  color: #06130e;
+  color: #fff;
 }
 
 .primary-button > span {
@@ -874,10 +882,6 @@ button:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-[data-theme='light'] .primary-button {
-  color: #fff;
 }
 
 .primary-button:hover:not(:disabled) {
@@ -888,10 +892,6 @@ button:disabled {
 .primary-button.is-danger {
   border-color: color-mix(in srgb, var(--danger) 70%, var(--border));
   background: var(--danger);
-  color: #26090d;
-}
-
-[data-theme='light'] .primary-button.is-danger {
   color: #fff;
 }
 
@@ -1191,7 +1191,7 @@ button:disabled {
   grid-template-rows: minmax(0, 1fr) minmax(34px, 0fr);
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-l);
   background: var(--terminal);
   box-shadow: var(--shadow);
   transition: grid-template-rows 220ms cubic-bezier(0.2, 0.75, 0.2, 1);
@@ -1334,9 +1334,9 @@ button:disabled {
 .terminal-key:hover:not(:disabled),
 .terminal-key:active:not(:disabled),
 .terminal-key[aria-pressed='true'] {
-  border-color: #69e6b4;
-  background: rgba(105, 230, 180, 0.12);
-  color: #94f2ca;
+  border-color: #5e9cff;
+  background: rgba(94, 156, 255, 0.12);
+  color: #8dbcff;
 }
 
 .terminal-key-control {
@@ -1363,7 +1363,7 @@ button:disabled {
   gap: 6px;
   margin: 5px 8px 5px 0;
   padding: 0 9px;
-  color: #94f2ca;
+  color: #8dbcff;
   font-size: 11px;
   font-weight: 700;
   white-space: nowrap;
@@ -1381,8 +1381,8 @@ button:disabled {
 
 .command-editor-toggle:hover,
 .command-editor-toggle[aria-expanded='true'] {
-  border-color: #69e6b4;
-  background: rgba(105, 230, 180, 0.1);
+  border-color: #5e9cff;
+  background: rgba(94, 156, 255, 0.1);
 }
 
 .command-editor {
@@ -1526,7 +1526,7 @@ button:disabled {
 
 .command-send-options button:hover {
   background: #22313c;
-  color: #94f2ca;
+  color: #8dbcff;
 }
 
 @media (max-width: 760px) {
@@ -1591,8 +1591,8 @@ button:disabled {
   place-items: center;
   border: 1px solid #294137;
   border-radius: 13px;
-  background: rgba(105, 230, 180, 0.08);
-  color: #69e6b4;
+  background: rgba(94, 156, 255, 0.08);
+  color: #5e9cff;
   font-family: var(--mono);
   font-size: 16px;
   font-weight: 700;
@@ -1619,8 +1619,8 @@ button:disabled {
 
 .terminal-empty .small-button {
   border-color: #294137;
-  background: rgba(105, 230, 180, 0.08);
-  color: #69e6b4;
+  background: rgba(94, 156, 255, 0.08);
+  color: #5e9cff;
 }
 
 .event-bar {
@@ -2427,7 +2427,7 @@ button:disabled {
 
 .event-line strong {
   overflow: hidden;
-  color: #69e6b4;
+  color: #5e9cff;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
@@ -2485,16 +2485,27 @@ button:disabled {
   overflow-y: auto;
   padding: 0;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius-l);
   background: var(--surface);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.58);
+  box-shadow: var(--shadow);
   color: var(--text);
 }
 
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.dialog-actions .primary-button,
+.dialog-actions .secondary-button {
+  min-height: 44px;
+  padding-inline: 22px;
+}
+
 .host-key-dialog::backdrop {
-  background: rgba(2, 6, 9, 0.76);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background: rgba(20, 32, 48, 0.5);
 }
 
 .host-key-dialog form {
@@ -2698,9 +2709,7 @@ button:disabled {
 }
 
 .process-kill-dialog::backdrop {
-  background: rgba(2, 6, 9, 0.76);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background: rgba(20, 32, 48, 0.5);
 }
 
 .process-kill-dialog form {
@@ -2820,9 +2829,7 @@ button:disabled {
   width: auto;
   padding: 0;
   border: 0;
-  background: rgba(1, 5, 8, 0.68);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
+  background: var(--surface);
 }
 
 @keyframes toast-in {
@@ -3246,6 +3253,106 @@ button:disabled {
 
   .terminal-toolbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ── Mobile layout: full-bleed workspace ── */
+  .workspace {
+    padding: 0;
+  }
+
+  .terminal-card {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .app-shell {
+    height: calc(100dvh - var(--topbar-height));
+  }
+
+  /* Connection panel becomes a wide rounded drawer on phones. */
+  .connection-panel {
+    width: min(92vw, 380px);
+    border-right: 0;
+    border-radius: 0 var(--radius-l) var(--radius-l) 0;
+    padding: 20px 16px max(20px, env(safe-area-inset-bottom));
+  }
+
+  /* ── Tables become cards ── */
+  .file-table thead,
+  .process-table thead {
+    display: none;
+  }
+
+  .file-table,
+  .process-table,
+  .file-table tbody,
+  .process-table tbody,
+  .file-table tr,
+  .process-table tr,
+  .file-table td,
+  .process-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .file-table tbody tr,
+  .process-table tbody tr {
+    margin: 0 12px 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .file-table td,
+  .process-table td {
+    height: auto;
+    padding: 2px 0;
+    border-bottom: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .file-table td:first-child {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .file-table td:nth-child(n + 2),
+  .process-table td:nth-child(n + 2) {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .file-table td:last-child,
+  .process-table td:last-child {
+    margin-top: 6px;
+  }
+
+  /* ── Dialogs become bottom sheets ── */
+  .host-key-dialog,
+  .process-kill-dialog {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 92dvh;
+    margin: 0;
+    border: 0;
+    border-radius: var(--radius-l) var(--radius-l) 0 0;
+    padding: 20px 20px max(20px, env(safe-area-inset-bottom));
+  }
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .dialog-actions .primary-button,
+  .dialog-actions .secondary-button {
+    width: 100%;
+    min-height: 48px;
   }
 }
 
