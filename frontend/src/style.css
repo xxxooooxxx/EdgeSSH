@@ -27,8 +27,8 @@
   --surface: #ffffff;
   --surface-2: #e9f1f9;
   --surface-3: #dbe7f5;
-  --terminal: #0b1217;
-  --terminal-chrome: rgba(10, 16, 28, 0.94);
+  --terminal: #141e33;
+  --terminal-chrome: rgba(20, 30, 51, 0.88);
   --border: #d8e2f0;
   --border-soft: #e6edf6;
   --text: #1b2735;
@@ -867,10 +867,10 @@ button:disabled {
   border-radius: 26px;
   overflow: hidden;
   background: var(--terminal-chrome);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 64px rgba(8, 16, 30, 0.4);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(140, 180, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(180, 210, 255, 0.12), 0 24px 64px rgba(20, 40, 80, 0.35);
   color: #e8eef5;
 }
 
