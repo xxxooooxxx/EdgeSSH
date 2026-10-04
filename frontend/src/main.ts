@@ -1164,12 +1164,33 @@ function fitTerminal(send = true): void {
     try {
       fitAddon.fit();
       if (send && socket?.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: 'resize', cols: terminal.cols, rows: terminal.rows }));
+        const size = safeTerminalSize();
+        socket.send(JSON.stringify({ type: 'resize', cols: size.cols, rows: size.rows }));
       }
     } catch {
       // The terminal can be temporarily dimensionless during a panel drawer transition.
     }
   });
+}
+
+/**
+ * Returns terminal dimensions guaranteed to pass backend validation
+ * (cols: 10-1000, rows: 5-1000, integers). Falls back to 80x24 when the
+ * terminal is hidden or not yet fitted (e.g. connecting from the quick-connect
+ * form while the terminal drawer is closed).
+ */
+function safeTerminalSize(): { cols: number; rows: number } {
+  try {
+    fitAddon.fit();
+  } catch {
+    // Terminal is dimensionless (hidden drawer); use defaults below.
+  }
+  const cols = Math.floor(terminal.cols);
+  const rows = Math.floor(terminal.rows);
+  if (!Number.isFinite(cols) || !Number.isFinite(rows) || cols < 10 || cols > 1000 || rows < 5 || rows > 1000) {
+    return { cols: 80, rows: 24 };
+  }
+  return { cols, rows };
 }
 
 function setPanelOpen(open: boolean): void {
@@ -1565,6 +1586,7 @@ function createSshReconnectFactory(): (attempt: number) => Promise<WebSocket> {
       }
       // Reset terminal for the new session.
       resetTerminalForConnection(terminal);
+      const termSize = safeTerminalSize();
       fitTerminal(true);
 
       const config: ConnectionConfig = {
@@ -1573,8 +1595,8 @@ function createSshReconnectFactory(): (attempt: number) => Promise<WebSocket> {
         port: params.port,
         username: params.username,
         authMethod: params.authMethod as AuthMethod,
-        cols: terminal.cols,
-        rows: terminal.rows,
+        cols: termSize.cols,
+        rows: termSize.rows,
         term: params.term,
       };
       if (params.authMethod === 'password') config.password = params.password;
@@ -1731,6 +1753,7 @@ async function connect(): Promise<void> {
         activeSocket.close(1000, 'Connection attempt superseded');
         return;
       }
+      const reconnectSize = safeTerminalSize();
       fitTerminal(false);
       const config: ConnectionConfig = {
         type: 'connect',
@@ -1738,8 +1761,8 @@ async function connect(): Promise<void> {
         port,
         username,
         authMethod: method,
-        cols: terminal.cols,
-        rows: terminal.rows,
+        cols: reconnectSize.cols,
+        rows: reconnectSize.rows,
         term,
       };
       if (method === 'password') config.password = password;
