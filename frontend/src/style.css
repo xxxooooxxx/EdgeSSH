@@ -2286,6 +2286,11 @@ body[data-view='forward'] {
     padding: 8px 10px;
   }
 
+  /* 代码片段浮窗（收起时 186px）会盖住工具栏右侧，给它让位 */
+  .terminal-card:has(> .snippet-panel) .terminal-toolbar {
+    padding-right: 200px;
+  }
+
   .session-target strong { max-width: 130px; font-size: 13px; }
   .session-target span { max-width: 130px; }
 

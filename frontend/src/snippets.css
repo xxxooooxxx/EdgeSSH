@@ -48,7 +48,7 @@ body[data-view='snippets'] { overflow-y: auto; background: var(--home-bg); }
 .snippet-empty p { font-size: 13px; line-height: 1.6; }
 /* 浮窗依附完整工作台而非 xterm 区域，避免手机横屏时被展开的命令编辑器挤到不可操作。 */
 .terminal-card:has(> .snippet-panel) { position: relative; }
-.snippet-panel { position: absolute; z-index: 5; right: 12px; top: 84px; width: 320px; max-width: calc(100% - 16px); max-height: min(480px, calc(100% - 98px)); border: 1px solid var(--snip-border); border-radius: 12px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+.snippet-panel { position: absolute; z-index: 5; right: 12px; top: 54px; width: 320px; max-width: calc(100% - 16px); max-height: min(480px, calc(100% - 68px)); border: 1px solid var(--snip-border); border-radius: 12px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
 /* 停靠面板（文件/进程/日志）在终端卡片内展开时，代码片段浮窗隐藏让位，
    避免盖住面板工具栏导致按钮无法点击。 visibility 而非 display，保证
    面板关闭时无需重排即可恢复。 */
